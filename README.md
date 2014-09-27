@@ -1,0 +1,4 @@
+geometric-calculator
+====================
+
+Kalkulator geometryczny
