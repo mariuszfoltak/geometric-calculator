@@ -1,9 +1,13 @@
 package pl.foltak.geometriccalculator;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -32,5 +36,10 @@ public class HomeActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void squareClick(View view) {
+        Intent intent = new Intent(this, FigureActivity.class);
+        startActivity(intent);
     }
 }
