@@ -3,6 +3,7 @@ package pl.foltak.geometriccalculator;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,8 +37,7 @@ public class FigureActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
+        TableLayout layout = new TableLayout(this);
 
         initFields(layout, rectangle);
 
@@ -71,18 +72,18 @@ public class FigureActivity extends ActionBarActivity {
     }
 
     private void addFieldToLayout(ViewGroup view, Field field) {
-        RelativeLayout layout = inflateLayout();
+        ViewGroup layout = inflateLayout();
         prepareLabel(field, layout);
         prepareEditable(field, layout);
         view.addView(layout);
     }
 
-    private RelativeLayout inflateLayout() {
+    private ViewGroup inflateLayout() {
         LayoutInflater inflater = getLayoutInflater();
-        return (RelativeLayout) inflater.inflate(R.layout.field, null);
+        return (ViewGroup) inflater.inflate(R.layout.field, null);
     }
 
-    private void prepareEditable(Field field, RelativeLayout layout) {
+    private void prepareEditable(Field field, ViewGroup layout) {
         EditText editText = (EditText) layout.findViewWithTag("editText");
         editText.setEnabled(field.isEditable());
         editText.addTextChangedListener(new FieldTextWatcher(field));
@@ -90,7 +91,7 @@ public class FigureActivity extends ActionBarActivity {
         fields.put(field.getName(), editText);
     }
 
-    private void prepareLabel(Field field, RelativeLayout layout) {
+    private void prepareLabel(Field field, ViewGroup layout) {
         TextView textView = (TextView) layout.findViewWithTag("textView");
         textView.setText(getString(field.getResourceText()));
     }
