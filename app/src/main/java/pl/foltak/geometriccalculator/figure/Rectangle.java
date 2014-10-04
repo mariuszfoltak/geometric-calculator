@@ -1,10 +1,8 @@
 package pl.foltak.geometriccalculator.figure;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +14,7 @@ import pl.foltak.geometriccalculator.R;
 /**
  * Created by mfoltak on 9/27/14.
  */
-public class Rectangle {
+public class Rectangle implements Figure {
     @Getter
     private Double sideA;
     @Getter
@@ -28,16 +26,16 @@ public class Rectangle {
     @Getter
     private Double perimeter;
     @Getter
-    private Drawable imageResource;
+    private Drawable figureImage;
     @Getter
     private List<Field> fields;
 
     public Rectangle (Resources resources) {
-        imageResource = resources.getDrawable(R.drawable.figure_rectangle);
+        figureImage = resources.getDrawable(R.drawable.figure_rectangle);
         fields = initFields(resources);
     }
 
-    public List<Field> initFields(Resources resources) {
+    private List<Field> initFields(Resources resources) {
         List<Field> fields = new LinkedList<Field>();
         fields.add(new Field(resources.getString(R.string.figure_rectangle_sideA), true, "sideA") {
             @Override
@@ -89,7 +87,7 @@ public class Rectangle {
         return fields;
     }
 
-    public void setSideA(Double sideA) {
+    private void setSideA(Double sideA) {
         this.sideA = sideA;
         if (sideA != null) {
             if (sideB != null) {
@@ -104,7 +102,7 @@ public class Rectangle {
         }
     }
 
-    public void setSideB(Double sideB) {
+    private void setSideB(Double sideB) {
         this.sideB = sideB;
         if (sideB != null) {
             if (sideA != null) {
@@ -119,7 +117,7 @@ public class Rectangle {
         }
     }
 
-    public void setDiagonal(Double diagonal) {
+    private void setDiagonal(Double diagonal) {
         this.diagonal = diagonal;
         if (diagonal != null) {
             if (sideA != null) {

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import pl.foltak.geometriccalculator.figure.Figure;
 import pl.foltak.geometriccalculator.figure.Rectangle;
 
 
@@ -30,49 +31,28 @@ public class FigureActivity extends ActionBarActivity {
 
     private boolean isComputingValues = false;
     private Map<String, EditText> fields = new HashMap<String, EditText>();
-    private Rectangle rectangle = new Rectangle(getResources());
+    private Figure figure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        figure = new Rectangle(getResources());
         RelativeLayout layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_figure, null);
 
         setFigureImage(layout);
 
-        initFields((TableLayout) layout.findViewById(R.id.fieldTableLayout), rectangle);
+        initFields((TableLayout) layout.findViewById(R.id.fieldTableLayout), figure);
 
         setContentView(layout);
     }
 
     private void setFigureImage(RelativeLayout layout) {
         ImageView imageView = (ImageView) layout.findViewById(R.id.figureImageView);
-        imageView.setImageDrawable(rectangle.getImageResource());
+        imageView.setImageDrawable(figure.getFigureImage());
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.figure, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    public void initFields(final ViewGroup view, final Rectangle rectangle) {
-        for (final Field field : rectangle.getFields()) {
+    public void initFields(final ViewGroup view, final Figure figure) {
+        for (final Field field : figure.getFields()) {
             addFieldToLayout(view, field);
         }
     }
@@ -129,7 +109,7 @@ public class FigureActivity extends ActionBarActivity {
             if (isComputingValues) return;
             isComputingValues = true;
             field.setValue(parseDouble(charSequence.toString()));
-            for (Field otherField : rectangle.getFields()) {
+            for (Field otherField : figure.getFields()) {
                 if (otherField.getName() != field.getName()) {
                     EditText editText = fields.get(otherField.getName());
                     editText.setText(formatDouble(otherField.getValue()));
