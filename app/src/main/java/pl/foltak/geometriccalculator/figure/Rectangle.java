@@ -1,5 +1,9 @@
 package pl.foltak.geometriccalculator.figure;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,10 +27,19 @@ public class Rectangle {
     private Double area;
     @Getter
     private Double perimeter;
+    @Getter
+    private Drawable imageResource;
+    @Getter
+    private List<Field> fields;
 
-    public List<Field> getFields() {
+    public Rectangle (Resources resources) {
+        imageResource = resources.getDrawable(R.drawable.figure_rectangle);
+        fields = initFields(resources);
+    }
+
+    public List<Field> initFields(Resources resources) {
         List<Field> fields = new LinkedList<Field>();
-        fields.add(new Field(R.string.sideA, true, "sideA") {
+        fields.add(new Field(resources.getString(R.string.figure_rectangle_sideA), true, "sideA") {
             @Override
             public void setValue(Double value) {
                 setSideA(value);
@@ -37,7 +50,7 @@ public class Rectangle {
                 return sideA;
             }
         });
-        fields.add(new Field(R.string.sideB, true, "sideB") {
+        fields.add(new Field(resources.getString(R.string.sideB), true, "sideB") {
             @Override
             public void setValue(Double value) {
                 setSideB(value);
@@ -48,7 +61,7 @@ public class Rectangle {
                 return sideB;
             }
         });
-        fields.add(new Field(R.string.diagonal, true, "diagonal") {
+        fields.add(new Field(resources.getString(R.string.diagonal), true, "diagonal") {
             @Override
             public Double getValue() {
                 return diagonal;
@@ -60,13 +73,13 @@ public class Rectangle {
             }
 
         });
-        fields.add(new Field(R.string.area, false, "area") {
+        fields.add(new Field(resources.getString(R.string.area), false, "area") {
             @Override
             public Double getValue() {
                 return area;
             }
         });
-        fields.add(new Field(R.string.perimeter, false, "perimeter") {
+        fields.add(new Field(resources.getString(R.string.perimeter), false, "perimeter") {
             @Override
             public Double getValue() {
                 return perimeter;
@@ -74,18 +87,6 @@ public class Rectangle {
         });
 
         return fields;
-    }
-
-    public void setField(String fieldName, Double value) {
-        try {
-            Rectangle.class.getMethod("set" + fieldName).invoke(this, value);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException();
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException();
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException();
-        }
     }
 
     public void setSideA(Double sideA) {

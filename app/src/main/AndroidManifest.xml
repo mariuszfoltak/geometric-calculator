@@ -18,7 +18,8 @@
         </activity>
         <activity
             android:name=".FigureActivity"
-            android:label="@string/title_activity_figure" >
+            android:label="@string/title_activity_figure"
+            >
         </activity>
     </application>
 

@@ -5,7 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_figure">FigureActivity</string>
-    <string name="sideA">Bok a: </string>
+    <string name="figure.rectangle.sideA">Bok a: </string>
     <string name="sideB">Bok b: </string>
     <string name="diagonal">Przekątna: </string>
     <string name="area">Pole: </string>

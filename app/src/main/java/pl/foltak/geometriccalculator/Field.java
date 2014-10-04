@@ -6,13 +6,13 @@ import lombok.Getter;
  * Created by mfoltak on 9/27/14.
  */
 public class Field {
-    @Getter private final int resourceText;
+    @Getter private final String label;
     @Getter private final boolean editable;
     @Getter private final String name;
     private int value;
 
-    public Field(int resourceText, boolean editable, String name) {
-        this.resourceText = resourceText;
+    public Field(String label, boolean editable, String name) {
+        this.label = label;
         this.editable = editable;
         this.name = name;
     }

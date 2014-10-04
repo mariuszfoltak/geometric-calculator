@@ -3,14 +3,13 @@ package pl.foltak.geometriccalculator;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -24,7 +23,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import pl.foltak.geometriccalculator.figure.Figure;
 import pl.foltak.geometriccalculator.figure.Rectangle;
 
 
@@ -32,16 +30,24 @@ public class FigureActivity extends ActionBarActivity {
 
     private boolean isComputingValues = false;
     private Map<String, EditText> fields = new HashMap<String, EditText>();
-    private Rectangle rectangle = new Rectangle();
+    private Rectangle rectangle = new Rectangle(getResources());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TableLayout layout = new TableLayout(this);
 
-        initFields(layout, rectangle);
+        RelativeLayout layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_figure, null);
+
+        setFigureImage(layout);
+
+        initFields((TableLayout) layout.findViewById(R.id.fieldTableLayout), rectangle);
 
         setContentView(layout);
+    }
+
+    private void setFigureImage(RelativeLayout layout) {
+        ImageView imageView = (ImageView) layout.findViewById(R.id.figureImageView);
+        imageView.setImageDrawable(rectangle.getImageResource());
     }
 
 
@@ -93,7 +99,7 @@ public class FigureActivity extends ActionBarActivity {
 
     private void prepareLabel(Field field, ViewGroup layout) {
         TextView textView = (TextView) layout.findViewWithTag("textView");
-        textView.setText(getString(field.getResourceText()));
+        textView.setText(field.getLabel());
     }
 
     private String formatDouble(Double value) {
